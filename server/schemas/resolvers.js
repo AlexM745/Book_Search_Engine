@@ -4,14 +4,24 @@ const { User } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
-    Query:{
+    Query: {
+        me: async (parent, args, context) => {
+            // check if users exist
+            if (context.user) {
+                // looks for user by id and looks at the password for that user
+                const userData = await User.findOne({ _id: context.user._id }).select(
+                    "-__v -password"
+                );
+                return userData;
+            }
+            throw new AuthenticationError("Not logged in");
+        },
+    },
+
+    Mutation: {
 
     },
 
-    Mutation:{
-
-    },
-    
 };
 
 module.exports = resolvers;
