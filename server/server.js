@@ -21,7 +21,7 @@ const server = new ApolloServer ({
 });
 
 
-
+// Create a new instance of an Apollo server with the GraphQL schema
 const  startApolloServer = async () => {
   await server.start();
 
@@ -36,10 +36,8 @@ const  startApolloServer = async () => {
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-// once the build is done it creates a dist folder and it will show the index.html 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-  });
+//routes index.js has the app.use to serve up react front-end in production in the routes.
+app.use(routes);
 }
 }
 
@@ -53,3 +51,6 @@ db.once('open', () => {
     console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
 });
 });
+
+// Call the async function to start the server
+startApolloServer();
