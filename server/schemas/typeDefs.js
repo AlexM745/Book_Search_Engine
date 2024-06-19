@@ -16,6 +16,11 @@ type Book {
     image: String
     link: String
 }
+
+type Auth {
+token: ID!
+user: User
+}
 `;
 
 module.exports = typeDefs;
