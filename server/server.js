@@ -2,13 +2,24 @@ const express = require('express');
 const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');
+
 //importing apollo server, expressmiddle ware and auth middleware
 const {ApolloServer} = require("@apollo/server");
 const { expressMiddleware } = require('@apollo/server/express4');
 const { authMiddleware } = require('./utils/auth');
 
+// importing the typedef and resolvers
+const {typeDefs, resolvers} = require('./schemas');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// new instance of apollo server which takes both parts of the schema as parameters which allows schema handle data
+const server = new ApolloServer ({
+  typeDefs, 
+  resolvers
+});
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
