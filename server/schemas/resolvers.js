@@ -27,6 +27,7 @@ const resolvers = {
 
             return { token, user };
         },
+        // this is for when user logs in
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
 
@@ -42,6 +43,18 @@ const resolvers = {
 
             const token = signToken(user);
             return { token, user };
+        },
+
+        saveBook: async (parent, { userInput }, context) => {
+            if (context.user) {
+                const saveBook = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { savedBooks: userInput } },
+                    { new: true, runValidators: true }
+                );
+                return saveBook;
+            }
+            throw new AuthenticationError('You need to be logged in!');
         },
 
     },
