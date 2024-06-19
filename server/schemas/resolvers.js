@@ -5,6 +5,7 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
     Query: {
+        // logs in a user
         me: async (parent, args, context) => {
             // check if users exist
             if (context.user) {
@@ -19,12 +20,30 @@ const resolvers = {
     },
 
     Mutation: {
-        addUser: async (parent,{ username, email, password }) => {
-            const user = await User.create( {username, email, password });
+        // this creates a user 
+        addUser: async (parent, { username, email, password }) => {
+            const user = await User.create({ username, email, password });
             const token = signToken(user);
 
             return { token, user };
         },
+        login: async (parent, { email, password }) => {
+            const user = await User.findOne({ email });
+
+            if (!user) {
+                throw new AuthenticationError("Incorrect email or password");
+            }
+
+            const correctPw = await user.isCorrectPassword(password);
+
+            if (!correctPw) {
+                throw new AuthenticationError("Incorrect email or password");
+            }
+
+            const token = signToken(user);
+            return { token, user };
+        },
+
     },
 
 };
