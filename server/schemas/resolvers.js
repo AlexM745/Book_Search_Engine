@@ -56,7 +56,7 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in!');
         },
-
+        // this removes the book from the user when delete book button is pressed.
         removeBook: async (parent, { bookId }, context) => {
             if (context.user) {
                 const updatedBook = await User.findOneAndUpdate(
@@ -69,10 +69,6 @@ const resolvers = {
             throw new AuthenticationError("You need to be logged in!");
         },
     },
-}
-
-    },
-
 };
 
 module.exports = resolvers;
