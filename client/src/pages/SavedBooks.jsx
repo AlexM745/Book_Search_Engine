@@ -17,10 +17,13 @@ import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  
+
   // removed the useEffect and used query instead to get the GET_ME query
   const {loading, data} = useQuery(GET_ME);
   let userData = data?.me|| {};
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   // using the mutation REMOVE_BOOK
   const [removeBook] = useMutation(REMOVE_BOOK);
 
