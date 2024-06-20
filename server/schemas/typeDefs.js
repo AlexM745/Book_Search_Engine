@@ -29,8 +29,8 @@ type Query {
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    saveBook(addedBook: String!): User
-    removeBook(updatedBook: String!); User
+    saveBook(userInput: BookInput!): User
+    removeBook(bookId: ID!); User
 }
 `;
 
