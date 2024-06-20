@@ -21,9 +21,7 @@ const SavedBooks = () => {
   // removed the useEffect and used query instead to get the GET_ME query
   const {loading, data} = useQuery(GET_ME);
   let userData = data?.me|| {};
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
   // using the mutation REMOVE_BOOK
   const [removeBook] = useMutation(REMOVE_BOOK);
 
@@ -36,14 +34,13 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await deleteBook(bookId, token);
+      const response = await removeBook(bookId, token);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
 
-      const updatedUser = await response.json();
-      setUserData(updatedUser);
+      userData = user;
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
@@ -52,7 +49,7 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userDataLength) {
+  if (loading) {
     return <h2>LOADING...</h2>;
   }
 
