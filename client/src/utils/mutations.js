@@ -25,7 +25,24 @@ export const ADD_USER = gql`
     } 
 `;
 // saves book on user collection
-export const SAVE_BOOK = gql
+export const SAVE_BOOK = gql`
+    mutation saveBook($addedBook: BookInput!) {
+        saveBook(addedBook: $addedBook){
+            _id
+            username
+            bookCount
+            saveBooks{
+                bookId
+                authors
+                image
+                link
+                title
+                description
+            }
+            
+        }
+    }
+`;
 
 
 // removes the book from user collection 
