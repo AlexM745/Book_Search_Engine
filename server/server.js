@@ -26,7 +26,7 @@ const startApolloServer = async () => {
   await server.start();
 
   //middleware
-  app.use(express.urlencoded({ extended: false }));
+  app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   // graphql ApI route passing  second arg into expressmiddleware setting the "context" property for the authMiddleware.
   app.use('/graphql', expressMiddleware(server, {
@@ -39,10 +39,6 @@ const startApolloServer = async () => {
     //routes index.js has the app.use to serve up react front-end in production in the routes.
     app.use(routes);
   }
-
-
-  // express will use the grapql api route 
-  app.use('/graphql', expressMiddleware(server));
 
   // once the app is running the terminal will displaying that the api is running and a link to use graphql.
   db.once('open', () => {
