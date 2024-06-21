@@ -35,18 +35,22 @@ const startApolloServer = async () => {
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/build')));
-    //routes index.js has the app.use to serve up react front-end in production in the routes.
-    app.use(routes);
-  }
-
-  // once the app is running the terminal will displaying that the api is running and a link to use graphql.
-  db.once('open', () => {
-    app.listen(PORT, () => {
-      console.log(`🌍 Now listening on localhost:${PORT}`);
-      console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+    app.use("/", express.static(path.join(__dirname, "client", "build")));
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
     });
+  }
+  //routes index.js has the app.use to serve up react front-end in production in the routes.
+  app.use(routes);
+}
+
+// once the app is running the terminal will displaying that the api is running and a link to use graphql.
+db.once('open', () => {
+  app.listen(PORT, () => {
+    console.log(`🌍 Now listening on localhost:${PORT}`);
+    console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
   });
+});
 }
 // Call the async function to start the server
 startApolloServer();
