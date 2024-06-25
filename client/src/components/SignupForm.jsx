@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
-// import appolo hook and add user mutation
+// import apollo hook and add user mutation
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from "../utils/mutations";
 
@@ -18,7 +18,7 @@ const SignupForm = () => {
 
   // declaring the user and useMutation
 
-  const [addUser, { error }] = useMutation(ADD_USER);
+  const [addUser] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -39,7 +39,7 @@ const SignupForm = () => {
     // using the addUser function from mutation
     try {
       const { data } = await addUser({
-        variables: { ...formState },
+        variables: { ...userFormData },
       });
 
       Auth.login(data.addUser.token);
