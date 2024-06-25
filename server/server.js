@@ -35,7 +35,7 @@ const startApolloServer = async () => {
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/build')));
+    app.use(express.static(path.join(__dirname, '../client/dist')));
     //routes index.js has the app.use to serve up react front-end in production in the routes.
     app.use(routes);
   }
