@@ -19,9 +19,9 @@ module.exports = {
     if (req.headers.authorization) {
       token = token.split(' ').pop().trim();
     }
-
+    
     if (!token) {
-      return req
+      return req;
     }
 
     // verify token and get user data out of it
@@ -30,7 +30,6 @@ module.exports = {
       req.user = data;
     } catch {
       console.log('Invalid token');
-      return res.status(400).json({ message: 'invalid token!' });
     }
 
     // send to next endpoint
