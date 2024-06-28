@@ -3,7 +3,7 @@
 
   ## Description
 
- WORK IN PROGRESS
+ 
 
   A Google Books API search engine that is built with the MERN stack. Users can signup and login, search for their favorite books and save them to their accounts.
 
@@ -28,7 +28,8 @@
  https://book-search-engine-g0le.onrender.com
 
  ## Demonstration
-  WORK IN PROGRESS
+ 
+  [![Watch the video](https://img.youtube.com/vi/T3ldw-hNrwM/maxresdefault.jpg)](https://youtu.be/YT3ldw-hNrwM)
  
   ## Table of Contents
   - [User Story](#user-story)
